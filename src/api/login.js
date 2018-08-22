@@ -138,8 +138,8 @@ export default {
   },
   getAuthHeader () {
     return {
-      'Authorization': 'Bearer ' + localStorage.getItem('token')
+      'Content-Type': 'application/json',
+      'x-access-token': `${localStorage.getItem('token')}`
     };
   }
-  
 };

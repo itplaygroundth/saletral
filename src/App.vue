@@ -10,10 +10,10 @@
           
           <page-header v-if="$route.meta.breadcrumb" style=""></page-header>
      
-      
-          <div class="page-wrapper">
-            <router-view></router-view>
-          </div>   
+         
+          <transition name="fade" mode="out-in">
+            <router-view ></router-view>
+          </transition>
            <!-- App Footer -->
           <v-footer height="auto" class="white pa-3 app--footer">
             <span class="caption">Bl@cksheep &copy; {{ new Date().getFullYear() }}</span>

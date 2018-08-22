@@ -18,9 +18,9 @@ const router =  new Router({
 // router gards
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    // console.log(store.get('token'));
-    if (!store.get('token')) {
-      
+    // .getItem('token'));
+    if (localStorage.getItem('token') === '') { // .getItem('token')) {
+      // console.log(localStorage);
       next({
         path: '/login',
         query: {

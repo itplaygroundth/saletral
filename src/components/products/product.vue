@@ -20,8 +20,8 @@
           <v-card-title class="headline grey lighten-2" primary-title>
             <span class="headline">{{ dialogtitle }}</span>
               <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" @click.native="close">{{ $t("button.cancel") }}</v-btn>
-            <v-btn color="blue darken-1" @click.native="save">{{ $t("button.save") }}</v-btn>
+            <v-btn color="warning darken-1" @click.native="close">{{ $t("button.cancel") }}</v-btn>
+            <v-btn color="success darken-1" @click.native="save">{{ $t("button.save") }}</v-btn>
           </v-card-title>
 
           <v-card-text>
@@ -29,12 +29,12 @@
               <v-layout wrap>
                 <v-flex lg6 md4>
               <v-layout wrap>
-                <v-flex xs12 sm6 md4>
+                <v-flex xs12 sm6 md6>
                   <v-text-field v-model="editedItem.code" :label="scode('code')"></v-text-field>
                 </v-flex>
               </v-layout>
                <v-layout wrap>
-                <v-flex xs12 sm6 md4>
+                <v-flex xs12 sm6 md12>
                   <v-text-field v-model="editedItem.name1" :label="scode('name1')"></v-text-field>
                 </v-flex>
                </v-layout>
@@ -82,6 +82,8 @@
                   v-model="editedItem.pictures"
                   v-on:vdropzone-removed-file="removeFile"
                   v-on:vdropzone-success="uploadSucess"
+                  
+                  
                   
                   ></vue-dropzone>
                   </div>
@@ -231,11 +233,13 @@ export default {
       chunkSize: true,
       maxFiles: 4,
       maxFilesize: 0.5,
-      headers: { 'My-Awesome-Header': 'header value' },
       addRemoveLinks: true,
       destroyDropzone: true,
       uploadMultiple: true,
+      headers: { 'x-access-token': localStorage.getItem('token') }
+      // previewTemplate: '<div> Long template here </div>',
     },
+    
     isRemove: false,
     dialogtitle: '',
     search: ''
@@ -268,11 +272,13 @@ export default {
         this.pagination.totalItems == null) return 0;
 
       return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage);
+    },
+    reqheaders () {
+      
+      return { 'x-access-token': localStorage.getItem('token') };
+      
     }
-   
-   
   },
-
   watch: {
     dialog (val) {
       val || this.close();
@@ -434,12 +440,14 @@ export default {
       this.exp = false;
       this.dialogtitle = this.$t('label.product.edititem');
       const url = ap.img_url;
-
-
-      this.$refs.myVueDropzone.manuallyAddFile({ size: 123, name: item.picfilename1 }, url + item.picfilename1);
-      this.$refs.myVueDropzone.manuallyAddFile({ size: 123, name: item.picfilename2 }, url + item.picfilename2);
-      this.$refs.myVueDropzone.manuallyAddFile({ size: 123, name: item.picfilename3 }, url + item.picfilename3);
-      this.$refs.myVueDropzone.manuallyAddFile({ size: 123, name: item.picfilename4 }, url + item.picfilename4);
+      
+      // this.$refs.myVueDropzone.setOption('headers', { 'x-access-token': localStorage.getItem('token') });
+      if (item.picfilename1 !== null) {
+        this.$refs.myVueDropzone.manuallyAddFile({ size: 123, name: item.picfilename1 }, url + item.picfilename1);
+        this.$refs.myVueDropzone.manuallyAddFile({ size: 123, name: item.picfilename2 }, url + item.picfilename2);
+        this.$refs.myVueDropzone.manuallyAddFile({ size: 123, name: item.picfilename3 }, url + item.picfilename3);
+        this.$refs.myVueDropzone.manuallyAddFile({ size: 123, name: item.picfilename4 }, url + item.picfilename4);
+      }
     },
 
     deleteItem (item) {
@@ -476,7 +484,7 @@ export default {
         this.editedItem.picfilename2 = this.pictures[1];
         this.editedItem.picfilename3 = this.pictures[2];
         this.editedItem.picfilename4 = this.pictures[3];
-        console.log(this.editedItem.picfilename1, this.pictures[0]);
+        // console.log(this.editedItem.picfilename1, this.pictures[0]);
         ap.updateItem(this.editedItem)
           .then(res => {
             this.refresh();

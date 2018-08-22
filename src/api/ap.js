@@ -9,7 +9,7 @@ export default {
       headers: login.getAuthHeader()
     };
     
-    return Axios.get(`${config.API_URL}ap/all`).then(this.handleResponse);
+    return Axios.get(`${config.API_URL}ap/all`, requestOptions).then(this.handleResponse);
   },
   getCount () {
     const requestOptions = {
@@ -17,7 +17,7 @@ export default {
       headers: login.getAuthHeader()
     };
     
-    return Axios.get(`${config.API_URL}ap/count`).then(this.handleResponse);
+    return Axios.get(`${config.API_URL}ap/count`, requestOptions).then(this.handleResponse);
   },
   handleResponse (response) {
     

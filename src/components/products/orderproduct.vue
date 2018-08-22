@@ -121,8 +121,9 @@
     <v-btn @click="clear" color="warning">{{ $t("button.cancel") }}</v-btn>
     </div>
   </form>
+   <orderpsub-app v-if="issubmit"></orderpsub-app>
   </div>
- 
+
 </template>
 
 <script>
@@ -130,11 +131,17 @@ import ap from './../../api/ap';
 import { get, sync, call } from 'vuex-pathify';
 import OrderForm  from './../../api/order';
 import swal from 'sweetalert2';
+import router from '../../router';
+import orderproductsub from './orderproductsub';
+
 export default {
 
   name: 'orderp-app',
+  components: {
+    'orderpsub-app': orderproductsub
+  },
   props: {
-    
+    issubmit: false
   },
   data: () => ({
     loading: false,
@@ -326,6 +333,7 @@ export default {
           timerInterval = setInterval(() => {
             // swal.getContent().querySelector('strong')
             //   .textContent = swal.getTimerLeft();
+
           }, 100);
         },
         onClose: () => {
@@ -336,6 +344,7 @@ export default {
         // Read more about handling dismissals
           result.dismiss === swal.DismissReason.timer
         ) {
+          this.issubmit = true;
           // console.log('I was closed by the timer');
         }
       });
@@ -369,6 +378,11 @@ export default {
           break;
       }
     },
+    gotoPage (item) {
+      // console.log(`${this.$route.name}/${item}`);
+      router.name = item;
+      router.push({ name: `${item}` });
+    }
    
   }
 };

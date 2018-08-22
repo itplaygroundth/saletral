@@ -15,7 +15,7 @@ export default {
       
     };
    
-    return Axios.get(`${config.API_URL}items`).then(this.handleResponse);
+    return Axios.get(`${config.API_URL}items`, requestOptions).then(this.handleResponse);
   },
   getItem (val) {
     const requestOptions = {
@@ -24,7 +24,7 @@ export default {
       
     };
    
-    return Axios.get(`${config.API_URL}item/${val}`).then(this.handleResponse);
+    return Axios.get(`${config.API_URL}item/${val}`, requestOptions).then(this.handleResponse);
   },
   getCount () {
     const requestOptions = {
@@ -32,24 +32,26 @@ export default {
       headers: login.getAuthHeader()
     };
     
-    return Axios.get(`${config.API_URL}item/count`).then(this.handleResponse);
+    return Axios.get(`${config.API_URL}item/count`, requestOptions).then(this.handleResponse);
   },
   insertItem (data) {
     const requestOptions = {
       method: 'POST',
       headers: login.getAuthHeader(),
+      data: data
      
     };
-    console.log(data);
-    return Axios.post(`${config.API_URL}item`, data).then(this.handleResponse);
+   
+    return Axios.post(`${config.API_URL}item`, requestOptions).then(this.handleResponse);
   },
   updateItem (data) {
     const requestOptions = {
       method: 'PUT',
       headers: login.getAuthHeader(),
+      data: data
     };
     
-    return Axios.put(`${config.API_URL}item`, data).then(this.handleResponse);
+    return Axios.put(`${config.API_URL}item`, requestOptions).then(this.handleResponse);
   },
   handleResponse (response) {
     

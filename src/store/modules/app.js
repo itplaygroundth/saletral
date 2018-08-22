@@ -30,9 +30,9 @@ const actions = {
     return new Promise((resolve, reject) => {
       auth.login(creds).then(
         res => {
-         
+          // console.log(creds);
           this.set('authstatus', true)
-            .then(this.set('userslogin', creds.username))
+            .then(this.set('userslogin', creds.user))
             .then(this.set('token', localStorage.getItem('token')))
             .then(
               // console.log('token', localStorage.getItem('token')),

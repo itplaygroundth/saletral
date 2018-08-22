@@ -77,7 +77,7 @@ export default [
   },
   {
     path: '/openregis',
-    meta: { breadcrumb: true },
+    meta: { breadcrumb: true, requiresAuth: true },
     name: 'Openregister',
     component: () => import(
       /* webpackChunkName: "routes" */
@@ -87,7 +87,7 @@ export default [
   },
   {
     path: '/products',
-    meta: { breadcrumb: true },
+    meta: { breadcrumb: true, requiresAuth: true },
     name: 'productcontrol',
     component: () => import(
       /* webpackChunkName: "routes" */
@@ -113,11 +113,22 @@ export default [
           /* webpackChunkName: "routes" */
           /* webpackMode: "lazy-once" */
           `@/components/products/orderproduct.vue`
+        ),
+      },
+      {
+        path: '/products/orderproductsub',
+        meta: { breadcrumb: true, root: 'productcontrol', transitionName: 'slide' },
+        name: 'orderproductsub',
+        component: () => import(
+          /* webpackChunkName: "routes" */
+          /* webpackMode: "lazy-once" */
+          `@/components/products/orderproductsub.vue`
         )
-      }
+      },
+        
     ]
   },
-  // {
+  // { transitionName: 'slide'
   //   path: '/calendar',
   //   meta: { breadcrumb: true },
   //   name: 'Calendar',

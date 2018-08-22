@@ -64,7 +64,7 @@ const Util = {
       headers: login.getAuthHeader()
     };
     
-    return Axios.get(`${config.API_URL}util/unit/all`).then(this.handleResponse);
+    return Axios.get(`${config.API_URL}util/unit/all`, requestOptions).then(this.handleResponse);
   },
 };
 export default Util;
