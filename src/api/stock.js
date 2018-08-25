@@ -1,7 +1,7 @@
 import config from './config.js';
 import login from './login';
 import Axios from '../../node_modules/axios';
-
+Axios.defaults.headers.common['Authorization'] = login.AUTH_TOKEN;
 export default {
   url: 
     config.API_URL,
@@ -19,16 +19,13 @@ export default {
   },
   getItem (val) {
     const requestOptions = {
-      method: 'GET',
       headers: login.getAuthHeader(),
       
     };
     
     let url = val === '' ? `${config.API_URL}item` : `${config.API_URL}item/${val}`;
 
-    Axios.defaults.headers.common['Authorization'] = `${localStorage.getItem('token')}`;
-
-    return Axios.get(url).then(this.handleResponse);
+    return Axios.get(url, requestOptions).then(this.handleResponse);
   },
   getCount () {
     const requestOptions = {
