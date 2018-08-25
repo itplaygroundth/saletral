@@ -2,7 +2,7 @@ import Router from '../router';
 import Axios from '../../node_modules/axios';
 
 
-const API_URL = 'http://vps434.vpshispeed.net:3005/sapi/';
+const API_URL = 'http://vps434.vpshispeed.net/sapi/';
 const LOGIN_URL = API_URL + 'getdb/';
 
 // const SIGNUP_URL = API_URL + 'register/'
@@ -50,14 +50,19 @@ export default {
      
      
     const requestOptions = {
-      method: 'POST',
+      method: 'GET',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: creds.user, password: creds.password })
     };
-    // console.log(process.env);
+    // console.log(JSON.stringify({ username: creds.user, password: creds.password }));
     //  console.log(LOGIN_URL);
     
-    return fetch(LOGIN_URL, requestOptions)
+    return Axios.get(LOGIN_URL, {
+      params: {
+        username: creds.user, 
+        password: creds.password 
+      }
+    })
       .then(this.handleResponse)
       .then(user => {
          
@@ -118,27 +123,32 @@ export default {
     return Axios.delete(`${API_URL}/users/${id}`, requestOptions).then(this.handleResponse);
   },
   handleResponse (response) {
-     
-    return response.text().then(text => {
-      const data = text && JSON.parse(text);
-      
-      if (!response.ok) {
-        if (response.status === 401) {
-          // auto logout if 401 response returned from api
-          localStorage.removeItem('user');
-          // location.reload(true);
-        }
-
-        const error = (data && data.message) || response.statusText;
-        return Promise.reject(error);
+    
+   
+    const data = response.data;
+    
+    if (!response.data) {
+      if (response.status === 401) {
+        // auto logout if 401 response returned from api
+        localStorage.removeItem('user');
+        // location.reload(true);
       }
-      
-      return data;
-    });
+
+      const error = (data && data.message) || response.statusText;
+      return Promise.reject(error);
+    }
+    
+    return data;
+  
   },
   getAuthHeader () {
+    // console.log(`${localStorage.getItem('token')}`);
     return {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'DELETE, HEAD, GET, OPTIONS, POST, PUT',
+      'Access-Control-Allow-Headers': 'Content-Type, Content-Range, Content-Disposition, Content-Description',
+      'Access-Control-Max-Age': '1728000',
       'x-access-token': `${localStorage.getItem('token')}`
     };
   }

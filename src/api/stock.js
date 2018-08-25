@@ -14,8 +14,8 @@ export default {
       headers: login.getAuthHeader(),
       
     };
-   
-    return Axios.get(`${config.API_URL}items`, requestOptions).then(this.handleResponse);
+    // console.log(`${login.API_URL}item`);
+    return Axios.get(`${login.API_URL}item`, requestOptions).then(this.handleResponse);
   },
   getItem (val) {
     const requestOptions = {
@@ -23,8 +23,12 @@ export default {
       headers: login.getAuthHeader(),
       
     };
-   
-    return Axios.get(`${config.API_URL}item/${val}`, requestOptions).then(this.handleResponse);
+    
+    let url = val === '' ? `${config.API_URL}item` : `${config.API_URL}item/${val}`;
+
+    Axios.defaults.headers.common['Authorization'] = `${localStorage.getItem('token')}`;
+
+    return Axios.get(url).then(this.handleResponse);
   },
   getCount () {
     const requestOptions = {
@@ -72,4 +76,16 @@ export default {
     return data;
   
   },
+  getAuthHeader () {
+    // Axios.defaults.headers.common['Authorization'] = `${localStorage.getItem('token')}`;
+    // console.log(`${localStorage.getItem('token')}`);
+    return {
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'DELETE, HEAD, GET, OPTIONS, POST, PUT',
+      'Access-Control-Allow-Headers': 'Content-Type, Content-Range, Content-Disposition, Content-Description',
+      'Access-Control-Max-Age': '1728000',
+      
+    };
+  }
 };

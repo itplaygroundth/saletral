@@ -200,7 +200,7 @@
 
 <script>
 import API from '@/api';
-import EChart from '@/components/chart/echart';
+// import EChart from '@/components/chart/echart';
 import MiniStatistic from '@/components/widgets/statistic/MiniStatistic';
 import PostListCard from '@/components/widgets/card/PostListCard';
 import ProfileCard from '@/components/widgets/card/ProfileCard';
@@ -215,7 +215,7 @@ import BoxChart from '@/components/widgets/chart/BoxChart';
 import ChatWindow from '@/components/chat/ChatWindow';
 import CircleStatistic from '@/components/widgets/statistic/CircleStatistic';
 import LinearStatistic from '@/components/widgets/statistic/LinearStatistic';
-const API_URL = 'http://vps434.vpshispeed.net:3005/sapi/';
+const API_URL = 'http://vps434.vpshispeed.net/sapi/';
 import axios from 'axios';
 export default {
   components: {
@@ -227,7 +227,7 @@ export default {
     PostSingleCard,
     PostListCard,
     ProfileCard,
-    EChart,
+    // EChart,
     BoxChart,
     CircleStatistic,
     LinearStatistic,

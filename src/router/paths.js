@@ -97,7 +97,7 @@ export default [
     children: [
       {
         path: '/products/product',
-        meta: { breadcrumb: true, root: 'productcontrol' },
+        meta: { breadcrumb: true, requiresAuth: true, root: 'productcontrol' },
         name: 'product',
         component: () => import(
           /* webpackChunkName: "routes" */
@@ -107,17 +107,18 @@ export default [
       },
       {
         path: '/products/orderproduct',
-        meta: { breadcrumb: true, root: 'productcontrol' },
+        meta: { breadcrumb: true, requiresAuth: true, root: 'productcontrol' },
         name: 'orderproduct',
         component: () => import(
           /* webpackChunkName: "routes" */
           /* webpackMode: "lazy-once" */
           `@/components/products/orderproduct.vue`
-        ),
-      },
+        )
+      }, 
+
       {
         path: '/products/orderproductsub',
-        meta: { breadcrumb: true, root: 'productcontrol', transitionName: 'slide' },
+        meta: { breadcrumb: true, root: 'productcontrol', requiresAuth: true, transitionName: 'slide' },
         name: 'orderproductsub',
         component: () => import(
           /* webpackChunkName: "routes" */
@@ -126,6 +127,7 @@ export default [
         )
       },
         
+      
     ]
   },
   // { transitionName: 'slide'

@@ -1,6 +1,8 @@
 <template>
 
 <div id="page-forms">
+
+  <v-flex>
   <form>
     <v-container grid-list-xl fluid>
       <v-layout row wrap>
@@ -121,8 +123,12 @@
     <v-btn @click="clear" color="warning">{{ $t("button.cancel") }}</v-btn>
     </div>
   </form>
-   <orderpsub-app v-if="issubmit"></orderpsub-app>
-  </div>
+  </v-flex>
+   
+  <!-- <v-slide-x-transition >
+   <orderpsub-app v-show="!headback"></orderpsub-app>
+  </v-slide-x-transition>-->
+  </div> 
 
 </template>
 
@@ -138,10 +144,10 @@ export default {
 
   name: 'orderp-app',
   components: {
-    'orderpsub-app': orderproductsub
+    orderproductsub
   },
   props: {
-    issubmit: false
+    
   },
   data: () => ({
     loading: false,
@@ -163,6 +169,7 @@ export default {
     items: [],
     model: null,
     search: null,
+    issubmit: false
 
   }),
   
@@ -180,6 +187,15 @@ export default {
         this.$store.set('keypress', key);
       }
     },
+    headback: {
+      get () {
+        return this.$store.getters['headback'];
+      },
+      set (key) {
+        this.$store.set('headback', key);
+      }
+    }
+   
     
   },
   watch: {
@@ -235,6 +251,7 @@ export default {
     if (this.items.length > 0) return;
 
     this.isLoading = true;
+    this.headback = true;
     // console.log(typeof this.$store.getters['orderproduct'].apcode);
     // Lazily load input items
     ap.getAll()
@@ -253,9 +270,7 @@ export default {
       })
       .finally(() => { this.isLoading = false });
     // console.log({ docno: this.docno, docdate: this.dateFormatted, duedate: this.duedate, apcode: this.model, apname: this.search });
-    
-    
-    
+
   },
  
   mounted () {
@@ -323,38 +338,42 @@ export default {
     },
     submit () {
       let timerInterval;
-      swal({
-        type: 'success',
-        title: 'Save...',
-        text: 'Success',
-        timer: 2000,
-        onOpen: () => {
-          swal.showLoading();
-          timerInterval = setInterval(() => {
-            // swal.getContent().querySelector('strong')
-            //   .textContent = swal.getTimerLeft();
+      // swal({
+      //   type: 'success',
+      //   title: 'Save...',
+      //   text: 'Success',
+      //   timer: 2000,
+      //   onOpen: () => {
+      //     swal.showLoading();
+      //     timerInterval = setInterval(() => {
+      //       // swal.getContent().querySelector('strong')
+      //       //   .textContent = swal.getTimerLeft();
 
-          }, 100);
-        },
-        onClose: () => {
-          clearInterval(timerInterval);
-        }
-      }).then((result) => {
-        if (
-        // Read more about handling dismissals
-          result.dismiss === swal.DismissReason.timer
-        ) {
-          this.issubmit = true;
-          // console.log('I was closed by the timer');
-        }
-      });
-      this.clear();
+      //     }, 100);
+      //   },
+      //   onClose: () => {
+      //     clearInterval(timerInterval);
+      //   }
+      // }).then((result) => {
+      //   if (
+      //   // Read more about handling dismissals
+      //     result.dismiss === swal.DismissReason.timer
+      //   ) {
+      //     this.issubmit = true;
+      //     this.headback = false;
+      //     // console.log('I was closed by the timer');
+      //   }
+      // });
+      // this.clear();
+      this.headback = true;
+      this.gotoPage('orderproductsub');
     },
     clear () {
       this.initData();
       this.dateFormatted = '';
       this.docno = '';
       this.model = '';
+      this.issubmit = false;
     },
     initData () {
       this.duedate = this.formatDate(this.$moment().format('YYYY-MM-DD'));
@@ -389,7 +408,9 @@ export default {
 
 
 </script>
-<style>
+<style scoped>
+ 
+
 /* a container with flex-direction column */
 .main-container {
   height: 75vh; /* or position:absolute; height:100%; */

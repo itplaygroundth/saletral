@@ -19,7 +19,8 @@ const router =  new Router({
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // .getItem('token'));
-    if (localStorage.getItem('token') === '') { // .getItem('token')) {
+    // console.log(localStorage.getItem('token'));
+    if (localStorage.getItem('token') === '' || localStorage.getItem('token') === null) { // .getItem('token')) {
       // console.log(localStorage);
       next({
         path: '/login',

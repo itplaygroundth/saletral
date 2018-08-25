@@ -18,7 +18,8 @@ const state = {
     apcode: sessionStorage.getItem('apcode'),
     apname: sessionStorage.getItem('apname'),
   },
-  globalsearch: ''
+  globalsearch: '',
+  headback: false
   
  
   
@@ -113,115 +114,6 @@ const getters =
     return typeof this !== 'undefined' ? this.state.keypress : null;
   }
 };
-// const state = {
-//   sidebar: {
-//     opened: false,
-//     withoutAnimation: false
-//   },
-//   config: {
-//     googleMaps: {
-//       apiKey: 'AIzaSyBNAqPrTQoz9P4NBlDDyfxrnKiafkaL8iQ'
-//     },
-//     windowMatchSizeLg: '(min-width: 992px)',
-//     palette: {
-//       primary: '#4ae387',
-//       danger: '#e34a4a',
-//       info: '#4ab2e3',
-//       success: '#db76df',
-//       warning: '#f7cc36',
-//       white: '#fff',
-//       black: '#000',
-//       fontColor: '#34495e',
-//       transparent: 'transparent',
-//       lighterGray: '#ddd'
-//     }
-//   },
-//   authen: {
-//     isLoggedIn: !!localStorage.getItem('id_token'),
-//     logout: false,
-//     status: false,
-//     loginRequest: '',
-//     loginSucess: false
-//   },
-  
- 
-// };
-// const mutations = make.mutations(state); 
-// const actions =  make.actions('authen');
-//   login ({ dispatch }, users) {
-//     console.log(users);
-//     dispatch('loginRequest', users.user);
-    
-//   },
- 
-// };
-// const getters = {
-// make all getters (optional)
-// ...make.getters(state),
-// };
-// const mutations = {
-//   [types.CLOSE_MENU] (state) {
-//     if (document.documentElement.clientWidth < 992) {
-//       state.sidebar.opened = false;
-//     }
-//   },
-//   [types.TOGGLE_SIDEBAR] (state, opened) {
-//     state.sidebar.opened = opened;
-//   },
-//   [types.TOGGLE_WITHOUT_ANIMATION] (state, value) {
-//     state.sidebar.withoutAnimation = value;
-//   },
-//   setLoading (state, isLoading) {
-//     state.isLoading = isLoading;
-//   },
-//   [types.LOGIN] (state) {
-//     state.pending = true;
-//   },
-//   [types.LOGIN_SUCCESS] (state, user) {
-//     state.isLoggedIn = true;
-//     state.pending = false;
-//     state.status = { loggedIn: true };
-//     state.user = user;
-//   },
-//   [types.LOGOUT] (state) {
-//     state.isLoggedIn = false;
-//   },
-//   [types.loginFailure] (state, user) {
-//     state.status = { };
-//     state.user = null;
-//   }, 
-// };
-
-// const actions = {
-//   closeMenu ({ commit }) {
-//     commit(types.CLOSE_MENU);
-//   },
-//   toggleSidebar ({ commit }, opened) {
-//     commit(types.TOGGLE_SIDEBAR, opened);
-//   },
-//   isToggleWithoutAnimation ({ commit }, value) {
-//     commit(types.TOGGLE_WITHOUT_ANIMATION, value);
-//   },
-//   login ({ commit }, creds) {
-//     commit(types.LOGIN); 
-//     auth.login(creds)
-//       .then(
-//         user => {
-//           commit('loginSuccess', user);
-//           Route.push('/');
-//         },
-//         error => {
-//           commit('loginFailure', error);
-         
-//         }
-//       );
-//   },
-//   logout ({ commit }) {
-//     sessionStorage.removeItem('token');
-//     commit(types.LOGOUT);
-//   }
-// };
-
 export default {
   state,
   mutations,
