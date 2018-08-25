@@ -2,7 +2,7 @@ import Router from '../router';
 import Axios from '../../node_modules/axios';
 
 
-const API_URL = 'http://vps434.vpshispeed.net:3005/sapi/';
+const API_URL = 'http://vps434.vpshispeed.net/sapi/';
 const LOGIN_URL = API_URL + 'getdb/';
 
 // const SIGNUP_URL = API_URL + 'register/'
