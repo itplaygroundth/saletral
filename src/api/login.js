@@ -139,7 +139,6 @@ export default {
     }
     
     return data;
-  
   },
   getAuthHeader () {
     // console.log(`${localStorage.getItem('token')}`);
