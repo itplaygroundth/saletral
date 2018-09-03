@@ -4,7 +4,10 @@
     <template v-if="!$route.meta.public">
       <v-app id="inspire" class="app">
         <app-drawer class="app--drawer"></app-drawer>
-        <app-toolbar class="app--toolbar"></app-toolbar>
+         <keep-alive>
+         <component :is="selectedComponent"></component>
+         </keep-alive>
+        
         <v-content>
           <!-- Page Header -->
           
@@ -63,16 +66,21 @@
 <script>
 import AppDrawer from '@/components/AppDrawer';
 import AppToolbar from '@/components/AppToolbar';
+import AppLocalToolbar from '@/components/AppLocalToolbar';
 import AppFab from '@/components/AppFab';
 import PageHeader from '@/components/PageHeader';
 // import menu from '@/api/menu';
 import ThemeSettings from '@/components/ThemeSettings';
 import AppEvents from  './event';
+import axios from 'axios';
+import store from './store';
+
 
 export default {
   components: {
     AppDrawer,
     AppToolbar,
+    AppLocalToolbar,
     AppFab,
     PageHeader,
     ThemeSettings
@@ -87,22 +95,40 @@ export default {
       
 
     },
-    shown: true
+    shown: true,
+    componentList: [
+      { label: 'bar', component: AppToolbar },
+      { label: 'Header', component: AppLocalToolbar }
+    ]
   }),
 
   computed: {
-   
+    selectedComponent: {
+      get () {
+        // this.selectedComponent = this.$store.getters['selectedComponent'];
+        // console.log(this.$store.getters['selectedComponent']);
+        return typeof this.$store.getters['selectedComponent'] !== 'undefined' ? this.$store.getters['selectedComponent'] : 'AppToolbar';
+      },
+      set () {
+        // console.log(this.$store.getters['selectedComponent']);
+        this.selectedComponent = this.$store.getters['selectedComponent'];
+      }
+     
+    }
   },
   created () {
+     
     AppEvents.forEach(item => {
       this.$on(item.name, item.callback);
     });
     window.getApp = this;
     window.addEventListener('keydown', this.onkey);
+    this.intercept();
   },
   beforeDestroy: function () {
     window.removeEventListener('keydown', this.onkey);
   },
+  
   methods: {
     openThemeSettings () {
       this.$vuetify.goTo(0);
@@ -112,10 +138,53 @@ export default {
       
       this.$store.set('keypress', event);
       
+    },
+    intercept () {
+      
+      this.axios.interceptors.response.use((response) => { // intercept the global error
+        return response;
+      }, function (error) {
+        if (typeof error.response !== 'undefined') {
+          let originalRequest = error.config;
+          if (error.response.status === 401 && !originalRequest._retry) {
+            // console.log('intercepter:', error);
+            localStorage.removeItem('token');
+            window.getApp.$emit('APP_LOGOUT');
+          }
+        }
+      });
     }
-  },
-
+  }
 };
+    
+// let originalRequest = error.config;
+// if (error.response.status === 401 && !originalRequest._retry) { // if the error is 401 and hasent already been retried
+//   originalRequest._retry = true; // now it can be retried 
+//   return this.$Vue.axios.post('/users/token', null).then((data) => {
+//     this.$store.dispatch('auth'); 
+//     this.$store.dispatch('auth', data.data);
+//     originalRequest.headers['Authorization'] = 'Bearer ' + this.$store.state.token; // new header new token
+//     return this.$Vue.axios(originalRequest); // retry the request that errored out
+// }).catch((error) => {
+//   for (let i = 0; i < error.response.data.errors.length; i++) {
+//     if (error.response.data.errors[i] === 'TOKEN-EXPIRED') {
+//       auth.logout();
+//       return;
+//     }
+//   }
+// });
+// }
+// if (error.response.status === 404 && !originalRequest._retry) {
+//   originalRequest._retry = true;
+//   window.location.href = '/';
+//   return;
+// }
+// Do something with response error
+// return Promise.reject(error);
+// })
+// }
+// },
+// };
 
 </script>
 

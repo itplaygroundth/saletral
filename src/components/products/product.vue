@@ -259,13 +259,9 @@ export default {
     },
     globalsearch: {
       get () {
-       
+        // console.log(this.$store.getters['globalsearch']);
         return this.$store.getters['globalsearch'];
       }
-      // ,
-      // set (val) {
-      //   this.$store.set('globalsearch', val);
-      // } 
     },
     pages () {
       if (this.pagination.rowsPerPage == null ||
@@ -277,6 +273,14 @@ export default {
       
       return { 'x-access-token': localStorage.getItem('token') };
       
+    },
+    selectedComponent: {
+      get () {
+        return this.$store.getters['selectedComponent'];
+      },
+      set () {
+        this.$store.set('selectedComponent', 'AppLocalToolbar');
+      }
     }
   },
   watch: {
@@ -287,7 +291,7 @@ export default {
     },
     pagination: {
       handler () {
-        this.searchDataFromApi(this.globalsearch)
+        this.searchDataFromApi(this.globalsearch || '')
           .then(data => {
             this.desserts = data.items;
             this.totalDesserts = data.total;
@@ -302,8 +306,10 @@ export default {
     {
       
       // this.search = this.globalsearch;
-      this.searchDataFromApi(this.globalsearch)
+      
+      this.searchDataFromApi(this.globalsearch || '')
         .then(data => {
+          console.log(data);
           this.desserts = data.items;
           this.totalDesserts = data.total;
         });
@@ -345,7 +351,7 @@ export default {
   methods: {
     
     initialize () {
-      this.searchDataFromApi(this.globalsearch);
+      this.searchDataFromApi(this.globalsearch || '');
     },
     headers (show) {
       // 
@@ -368,36 +374,39 @@ export default {
       return menu[0].text;
     },
     searchDataFromApi (val) {
-      // console.log(val);
+    
       this.loading = true;
       return new Promise((resolve, reject) => {
         const { sortBy, descending, page, rowsPerPage } = this.pagination;
 
         
-        this.getItem(val).then(rows => {
-          let items = rows;
-          
-          const total = items.length;
+        this.getItem(val).then(data => {
          
-          if (this.pagination.sortBy) {
-            items = items.sort((a, b) => {
-              const sortA = a[sortBy];
-              const sortB = b[sortBy];
+          
+          let items = data;
+          const total = typeof items === 'undefined' ? 0 : items.length;
+          
+          if (total > 0) {
+            if (this.pagination.sortBy) {
+              items = items.sort((a, b) => {
+                const sortA = a[sortBy];
+                const sortB = b[sortBy];
 
-              if (descending) {
-                if (sortA < sortB) return 1;
-                if (sortA > sortB) return -1;
-                return 0;
-              } else {
-                if (sortA < sortB) return -1;
-                if (sortA > sortB) return 1;
-                return 0;
-              }
-            });
-          }
+                if (descending) {
+                  if (sortA < sortB) return 1;
+                  if (sortA > sortB) return -1;
+                  return 0;
+                } else {
+                  if (sortA < sortB) return -1;
+                  if (sortA > sortB) return 1;
+                  return 0;
+                }
+              });
+            }
 
-          if (rowsPerPage > 0) {
-            items = items.slice((page - 1) * rowsPerPage, page * rowsPerPage);
+            if (rowsPerPage > 0) {
+              items = items.slice((page - 1) * rowsPerPage, page * rowsPerPage);
+            }
           }
           // console.log(items);
           setTimeout(() => {
@@ -416,21 +425,17 @@ export default {
       return ap.getAll(val).then(res => {
         // console.log(JSON.parse(JSON.stringify(res.rows)));
         return JSON.parse(JSON.stringify(res.rows));
-      }).catch(err => {
-        console.log(err);
       });
         
     },
     getItem (val) {
       // console.log(val);
       return ap.getItem(val).then(res => {
-        // console.log(JSON.parse(JSON.stringify(res.rows)));
-        return JSON.parse(JSON.stringify(res.rows));
-      }).catch(err => {
-        console.log(err);
+        return JSON.parse(JSON.stringify(res.data));
       });
         
     },
+    
 
     editItem (item) {
       this.editedIndex = this.desserts.indexOf(item);
@@ -466,7 +471,7 @@ export default {
       }, 300);
     },
     refresh () {
-      this.searchDataFromApi(this.globalsearch)
+      this.searchDataFromApi(this.globalsearch || '')
         .then(data => {
           this.desserts = data.items;
           this.totalDesserts = data.total;

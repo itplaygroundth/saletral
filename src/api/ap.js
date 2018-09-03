@@ -19,7 +19,7 @@ export default {
     
     return Axios.get(`${config.API_URL}ap/count`, requestOptions).then(this.handleResponse);
   },
-  handleResponse (response) {
+  handleResponse (response, next) {
     
    
     const data = response.data;
@@ -28,11 +28,13 @@ export default {
       if (response.status === 401) {
         // auto logout if 401 response returned from api
         localStorage.removeItem('user');
+       
         // location.reload(true);
       }
 
-      const error = (data && data.message) || response.statusText;
-      return Promise.reject(error);
+      const error = (data && data.message) || response.status;
+
+      return Promise.reject(response.status);
     }
     
     return data;

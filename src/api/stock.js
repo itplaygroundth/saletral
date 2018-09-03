@@ -1,8 +1,12 @@
 import config from './config.js';
 import login from './login';
 import Axios from '../../node_modules/axios';
+const AUTH_TOKEN = `${localStorage.getItem('token')}`;
+Axios.defaults.headers.common = { 'Authorization': 'bearer ' + AUTH_TOKEN };
 
-Axios.defaults.headers.common['Authorization'] = `${localStorage.getItem('token')}`;
+// Axios.defaults.headers.common['Authorization'] = `${localStorage.getItem('token')}`;
+
+const self = this;
 
 export default {
   url: 
@@ -22,12 +26,17 @@ export default {
   getItem (val) {
     const requestOptions = {
       headers: login.getAuthHeader(),
-      
+      method: 'GET'
     };
-  
+      
     let url = val === '' ? `${config.API_URL}item` : `${config.API_URL}item/${val}`;
-
-    return Axios.get(url, requestOptions).then(this.handleResponse);
+    
+    return Axios.get(url, requestOptions)
+      .then(response => {
+        console.log(response);
+        return response.data;
+      });
+       
   },
   getCount () {
     const requestOptions = {
@@ -81,9 +90,6 @@ export default {
     return {
       'Content-Type': 'application/json;charset=UTF-8',
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'DELETE, HEAD, GET, OPTIONS, POST, PUT',
-      'Access-Control-Allow-Headers': 'Content-Type, Content-Range, Content-Disposition, Content-Description',
-      'Access-Control-Max-Age': '1728000',
       
     };
   }

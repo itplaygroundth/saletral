@@ -109,7 +109,18 @@
       }
     ,"label":
     {
-      "orderproduct":{"title1":"วันที่","title2":"รหัสคู่ค้า/เลขที่เอกสาร","docno":"เลขที่เอกสาร","docdate":"วันที่เอกสาร","apcode":"รหัสคู่ค้า","apname":"ชื่อคู่ค้า","duedate":"วันครบกำหนด"},
+      "toolbar":{ "search":"ค้นหา" },
+      "orderproduct":{"title1":"วันที่","title2":"รหัสคู่ค้า/เลขที่เอกสาร","docno1":"เลขที่ใบสั่งสินค้า","docno":"เลขที่เอกสาร","docdate":"วันที่เอกสาร","apcode":"รหัสคู่ค้า","apname":"ชื่อคู่ค้า","duedate":"วันครบกำหนด",
+        "headers":[
+          {"text":"ลำดับ", "value": "index","show":true, "sortable": false },
+          {"text":"รหัสสินค้า", "value": "code","show":true, "sortable": true },
+          {"text":"ชื่อสินค้า", "value": "name1","show":true, "sortable": false },
+          {"text":"จำนวน","value":"qty","show":true,"sortable": true},
+          {"text":"หน่วย","value":"unitcode","show":true,"sortable": false},
+          {"text":"ราคา","value":"price","show":true,"sortable": true},
+          {"text":"ส่วนลด","value":"discountword","show":true,"sortable": false},
+          {"text":"ยอดรวม","value":"amount","show":true,"sortable": true}
+        ]},
       "product":{"title1":"รายการสินค้า","title2":"รหัสคู่ค้า/เลขที่เอกสาร","newitem":"เพิ่มรายการ","edititem":"แก้ไขรายการ","docdate":"วันที่เอกสาร","apcode":"รหัสคู่ค้า","apname":"ชื่อคู่ค้า","duedate":"วันครบกำหนด",
         "headers":[
         {"text":"รหัสสินค้า", "value": "code","show":true, "sortable": true },
@@ -128,5 +139,9 @@
         { "text": "Color", "value": "color" },
         { "text": "Value", "value": "value" }
       ]}
+    },
+    "error":
+    {
+      "orderproduct":{"title":"ผิดพลาด","docno":"ยังไม่ระบเลขที่เอกสาร"}
     }
 }

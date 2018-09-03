@@ -17,9 +17,13 @@ const router =  new Router({
 
 // router gards
 router.beforeEach((to, from, next) => {
+
+  
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // .getItem('token'));
-    // console.log(localStorage.getItem('token'));
+    console.log(localStorage.getItem('token'));
+    // console.log(to.meta.navigation);
+    // this.$store.dispatch('selectComponent', this.users);
     if (localStorage.getItem('token') === '' || localStorage.getItem('token') === null) { // .getItem('token')) {
       // console.log(localStorage);
       next({
@@ -29,9 +33,13 @@ router.beforeEach((to, from, next) => {
         },
       });
     } else {
+      store.dispatch('setComponent', to.meta.navigation);
+      // console.log(store.getters['selectedComponent']);
       next();
     }
   } else {
+    store.dispatch('setComponent', to.meta.navigation);
+    // console.log(store.getters['selectedComponent']);
     next();
   }
 });

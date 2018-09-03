@@ -97,17 +97,18 @@ export default [
     children: [
       {
         path: '/products/product',
-        meta: { breadcrumb: true, requiresAuth: true, root: 'productcontrol' },
+        meta: { breadcrumb: true, requiresAuth: true, root: 'productcontrol', navigation: 'AppLocalToolbar' },
         name: 'product',
         component: () => import(
           /* webpackChunkName: "routes" */
           /* webpackMode: "lazy-once" */
-          `@/components/products/product.vue`
-        )
+          `@/components/products/product.vue`,
+        ),
+        
       },
       {
         path: '/products/orderproduct',
-        meta: { breadcrumb: true, requiresAuth: true, root: 'productcontrol' },
+        meta: { breadcrumb: true, requiresAuth: true, root: 'productcontrol', navigation: 'AppToolbar' },
         name: 'orderproduct',
         component: () => import(
           /* webpackChunkName: "routes" */
@@ -118,7 +119,7 @@ export default [
 
       {
         path: '/products/orderproductsub',
-        meta: { breadcrumb: true, root: 'productcontrol', requiresAuth: true, transitionName: 'slide' },
+        meta: { breadcrumb: true, root: 'productcontrol', requiresAuth: true, transitionName: 'slide', navigation: 'AppToolbar' },
         name: 'orderproductsub',
         component: () => import(
           /* webpackChunkName: "routes" */

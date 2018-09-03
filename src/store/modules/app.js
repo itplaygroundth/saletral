@@ -4,6 +4,7 @@ import auth from '../../api/login';
 import { make } from 'vuex-pathify';
 import Route from '../../router';
 import swal from 'sweetalert2';
+
 // import VueSweetalert2 from '../../../node_modules/vue-sweetalert2';
 
 const state = {
@@ -19,24 +20,31 @@ const state = {
     apname: sessionStorage.getItem('apname'),
   },
   globalsearch: '',
-  headback: false
-  
- 
+  headback: false,
+  selectedComponent: '',
+  itemselected: []
   
 };
-const mutations = make.mutations(state);
+const mutations = {
+  ...make.mutations(state),
+  updateValue (state, value) {
+    state.globalsearch = value;
+  }
+};
 const actions = { 
   ...make.actions(state),
   logIN ({ commit, dispatch }, creds) {
     return new Promise((resolve, reject) => {
       auth.login(creds).then(
         res => {
-          // console.log(creds);
+          // console.log(res.token);
+          console.log('before:', localStorage.getItem('token'));
+          if (res.token && res.token !== localStorage.getItem('token')) localStorage.setItem('token', res.token);
           this.set('authstatus', true)
             .then(this.set('userslogin', creds.user))
             .then(this.set('token', localStorage.getItem('token')))
             .then(
-              // console.log('token', localStorage.getItem('token')),
+              console.log('after', localStorage.getItem('token')),
               Route.push('Dashboard')
             );
           resolve(res);
@@ -104,6 +112,14 @@ const actions = {
       });
     });
   },
+  setComponent ({ commit, dispatch }, componented)
+  {
+    
+    this.set('selectedComponent', componented);
+  },
+  updateValueAction ({ commit }, value) {
+    commit('updateValue', value);
+  }
   
 
 };
@@ -112,6 +128,9 @@ const getters =
   ...make.getters(state),
   getKeypress () {
     return typeof this !== 'undefined' ? this.state.keypress : null;
+  },
+  getSelectComponent () {
+    return typeof this !== 'undefined' ? this.state.selectComponent : null;
   }
 };
 export default {

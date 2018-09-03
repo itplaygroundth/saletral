@@ -265,9 +265,6 @@ export default {
         this.model = dump;
         // this.search = dum.name1;
       })
-      .catch(err => {
-        console.log(err);
-      })
       .finally(() => { this.isLoading = false });
     // console.log({ docno: this.docno, docdate: this.dateFormatted, duedate: this.duedate, apcode: this.model, apname: this.search });
 
@@ -365,8 +362,18 @@ export default {
       //   }
       // });
       // this.clear();
-      this.headback = true;
-      this.gotoPage('orderproductsub');
+      if (this.docno !== '') {
+        this.headback = true;
+        this.gotoPage('orderproductsub');
+      } else {
+        swal({
+          type: 'error',
+          title: this.$t('error.orderproduct.title'),
+          text: this.$t('error.orderproduct.docno'),
+          timer: 2000,
+        });
+      }
+    
     },
     clear () {
       this.initData();

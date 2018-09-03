@@ -16,9 +16,11 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "bcryptjs": "^2.4.3",
     "cheetah-grid": "^0.6.2",
     "flag-icon-css": "^3.0.0",
     "font-awesome": "^4.7.0",
+    "lodash": "^4.17.10",
     "lodash.truncate": "^4.4.2",
     "material-design-icons-iconfont": "^3.0.3",
     "moment-timezone": "^0.5.21",
@@ -30,6 +32,7 @@
     "vue-cheetah-grid": "^0.6.0",
     "vue-fullcalendar": "^1.0.9",
     "vue-moment": "^4.0.0",
+    "vue-multiselect": "^2.1.0",
     "vue-perfect-scrollbar": "^0.1.0",
     "vue-quill-editor": "^3.0.6",
     "vue-resize": "^0.4.4",
@@ -44,6 +47,7 @@
     "vuex-pathify": "^1.1.2"
   },
   "devDependencies": {
+    "@mdi/font": "^2.6.95",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",

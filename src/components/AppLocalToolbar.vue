@@ -8,30 +8,12 @@
     <v-toolbar-title class="ml-0 pl-3">
       <v-toolbar-side-icon @click.stop="handleDrawerToggle"></v-toolbar-side-icon>
     </v-toolbar-title>
-     <multiselect v-model="value" label="title" :options="items" 
-     :custom-label="customLabel" 
-     :show-labels="false" 
-     :resetAfter="true" 
-     :multiple="false" 
-     :searchable="true" 
-     :loading="loading" 
-     :internal-search="false" 
-     :clear-on-select="true" 
-     :close-on-select="true" 
-     :options-limit="10" 
-     :max-height="400" 
-     :show-no-results="false" 
-     :hide-selected="true" 
-     @select="selecteditem" 
-     @search-change="initialize" 
-     :placeholder="slabel"
-     group-values="data" group-label="categorys"
-     >
-          <template slot="option" slot-scope="props">
-         <v-flex xs12 sm6 md6><img class="option__image" :src="loadpic(props.option.picfilename1)" ></v-flex>
+     <multiselect :value="value" label="title" :options="items" :custom-label="customLabel" :show-labels="false" :resetAfter="true" :multiple="false" :searchable="true" :loading="loading" :internal-search="false" :clear-on-select="true" :close-on-select="true" :options-limit="10" :max-height="400" :show-no-results="false" :hide-selected="true" @search-change="search" :placeholder="slabel" >
+          <!-- <template slot="option" slot-scope="props">
+         <v-flex xs12 sm6 md6><img class="option__image" :src="props.option.picfilename1" ></v-flex>
          <v-flex xs12 sm6 md6>{{ props.option.code }}</v-flex>
         <v-flex xs12 sm6 md6>{{ props.option.name1 }}</v-flex>
-       </template>
+       </template> -->
   </multiselect>
       <v-spacer></v-spacer>
      <v-menu offset-y origin="left center" class="elelvation-1" :nudge-bottom="14" transition="scale-transition">
@@ -90,12 +72,9 @@ import { get, sync, call } from 'vuex-pathify';
 import ap from './../api/stock';
 import store from './../store';
 import Multiselect from 'vue-multiselect';
-import { nest, grouping } from './../api/nest';
-
-
 
 export default {
-  name: 'app-toolbar',
+  name: 'app-lotoolbar',
   components: {
     NotificationList,
     Multiselect
@@ -120,7 +99,6 @@ export default {
   data: () => ({
     loading: false,
     items: [],
-    search: null,
     select: {},
     model: null,
     filter: '',
@@ -178,7 +156,15 @@ export default {
     }
   },
   watch: {
-  
+    globalsearch: {
+      get () {
+        console.log(this.$store.getters['globalsearch']);
+        return this.$store.getters['globalsearch'];
+      },
+      set (val) {
+        this.$store.set('globalsearch', val);
+      } 
+    }
   },
   created () {
     // this.initialize();
@@ -186,10 +172,9 @@ export default {
   methods: {
     initialize (query) {
       this.loading = true;
-      this.getItem(query).then(data => {
-        if (typeof data !== 'undefined') this.items = [{ 'category': 'stock', data }];
-        // console.log(this.items);
-      });
+      // this.getItem(query).then(data => {
+      //   if (typeof data !== 'undefined') this.items = data;
+      // });
       this.loading = false;
     },
     handleDrawerToggle () {
@@ -219,8 +204,7 @@ export default {
         
         this.getItem(val).then(rows => {
 
-          let items = this.items = { 'category': 'stock', rows };
-          console.log(items);
+          let items = rows;
           const total = typeof items === 'undefined' ? 0 : items.length;
        
         
@@ -239,13 +223,7 @@ export default {
     getItem (val) {
       // console.log(val);
       return ap.getItem(val).then(res => {
-        
-        let _items = JSON.parse(JSON.stringify(res.data));
-        // console.log(_items);
-        // let data =  grouping(res.data, 'categorys', 'group'); // nest(res.data, 'categorys', 'groups');
-          
-        // console.log({ 'category': 'stock', data });
-        return _items;
+        return JSON.parse(JSON.stringify(res.data));
       }).catch(err => {
         let error = err; // console.log(err);
       });
@@ -260,8 +238,10 @@ export default {
       this.$store.set('itemselected', val);
       // console.log(val);
     },
-    loadpic (src) {
-      return ap.url + src;
+    search (val) {
+      console.log(val);
+      this.$store.set('globalsearch', val);
+      // return this;
     }
   }
 };

@@ -1,11 +1,12 @@
 import Router from '../router';
 import Axios from '../../node_modules/axios';
-
+const bcrypt = require('bcryptjs');
 
 const API_URL = 'https://vps434.vpshispeed.net/sapi/';
 const LOGIN_URL = API_URL + 'getdb/';
 const AUTH_TOKEN = `${localStorage.getItem('token')}`;
-Axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+Axios.defaults.headers.common = { 'Authorization': 'bearer ' + AUTH_TOKEN };
+// Axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // const SIGNUP_URL = API_URL + 'register/'
 
 // export const userService = {
@@ -54,7 +55,7 @@ export default {
       headers: this.getAuthHeader(),
       body: {
         username: creds.user, 
-        password: creds.password 
+        password: creds.password // bcrypt.hashSync(creds.password, 8) 
       }
     };
     // console.log(JSON.stringify({ username: creds.user, password: creds.password }));
@@ -63,9 +64,11 @@ export default {
     return Axios.post(LOGIN_URL, requestOptions)
       .then(this.handleResponse)
       .then(user => {
-         
+        
         // login successful if there's a jwt token in the response
+
         if (user.token) {
+          // console.log(user.token);
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('token', JSON.stringify(user.token));
         }
@@ -142,6 +145,7 @@ export default {
     // console.log(`${localStorage.getItem('token')}`);
     return {
       'Content-Type': 'application/json;charset=UTF-8',
+      'Accept': 'application/json',
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'DELETE, HEAD, GET, OPTIONS, POST, PUT',
       'Access-Control-Allow-Headers': 'Content-Type, Content-Range, Content-Disposition, Content-Description',
