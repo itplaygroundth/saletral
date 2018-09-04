@@ -62,8 +62,8 @@ export default {
     login () {
       
       this.$store.dispatch('logIN', this.users).then(res => {
-        console.log(res);
-        localStorage.setItem('token', res.token);
+        // console.log(res);
+        // localStorage.setItem('token', res.token);
         console.log(localStorage.getItem('token'));
       });
      

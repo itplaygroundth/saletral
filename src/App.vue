@@ -148,7 +148,7 @@ export default {
           let originalRequest = error.config;
           if (error.response.status === 401 && !originalRequest._retry) {
             // console.log('intercepter:', error);
-            localStorage.removeItem('token');
+            // localStorage.setItem('token', null);
             window.getApp.$emit('APP_LOGOUT');
           }
         }

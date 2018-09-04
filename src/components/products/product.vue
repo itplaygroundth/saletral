@@ -236,7 +236,7 @@ export default {
       addRemoveLinks: true,
       destroyDropzone: true,
       uploadMultiple: true,
-      headers: { 'x-access-token': localStorage.getItem('token') }
+      headers: { 'Authorization': 'bearer ' + localStorage.getItem('token') }
       // previewTemplate: '<div> Long template here </div>',
     },
     
@@ -271,7 +271,7 @@ export default {
     },
     reqheaders () {
       
-      return { 'x-access-token': localStorage.getItem('token') };
+      return { 'Authorization': 'bearer ' + localStorage.getItem('token') };
       
     },
     selectedComponent: {
@@ -430,10 +430,18 @@ export default {
     },
     getItem (val) {
       // console.log(val);
-      return ap.getItem(val).then(res => {
+       
+      let result = ap.getAItem().then(res => {
+        
         return JSON.parse(JSON.stringify(res.data));
       });
+      if (val) {
+        result = ap.getItem(val).then(res => {
         
+          return JSON.parse(JSON.stringify(res.data));
+        });
+      }
+      return result;
     },
     
 

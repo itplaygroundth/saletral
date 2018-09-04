@@ -45,7 +45,9 @@ export default {
       password: 'password'
     }
   }),
- 
+  computed () {
+    // localStorage.setItem('token', null);
+  },
   methods: {
     login () {
       this.loading = true;

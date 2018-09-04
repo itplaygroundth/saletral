@@ -354,7 +354,7 @@ export default {
      
       axios.get(API_URL + 'me',
         {
-          headers: { 'x-access-token': sessionStorage.getItem('token') }
+          headers: { 'Authorization': 'bearer ' + localStorage.getItem('token') }
         }
       )
         .then((data) => {

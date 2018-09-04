@@ -20,7 +20,7 @@ export default {
       headers: login.getAuthHeader(),
       
     };
-    // console.log(`${login.API_URL}item`);
+    console.log(Axios.defaults.headers.common);
     return Axios.get(`${login.API_URL}item`, requestOptions).then(this.handleResponse);
   },
   getItem (val) {
@@ -29,13 +29,32 @@ export default {
       method: 'GET'
     };
       
-    let url = val === '' ? `${config.API_URL}item` : `${config.API_URL}item/${val}`;
+    let url = `${config.API_URL}item/${val}`;
     
-    return Axios.get(url, requestOptions)
+    const result = Axios.get(url, requestOptions)
       .then(response => {
-        console.log(response);
-        return response.data;
+        return Promise.resolve(response.data);
+      }).catch(err => {
+        console.log(err);
       });
+    return result;
+       
+  },
+  getAItem () {
+    const requestOptions = {
+      headers: login.getAuthHeader(),
+      method: 'GET'
+    };
+      
+    let url = `${config.API_URL}item`;
+    console.log(AUTH_TOKEN);
+    const result = Axios.get(url, requestOptions)
+      .then(response => {
+        return Promise.resolve(response.data);
+      }).catch(err => {
+        console.log(err);
+      });
+    return result;
        
   },
   getCount () {

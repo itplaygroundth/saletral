@@ -37,14 +37,15 @@ const actions = {
     return new Promise((resolve, reject) => {
       auth.login(creds).then(
         res => {
-          // console.log(res.token);
-          console.log('before:', localStorage.getItem('token'));
-          if (res.token && res.token !== localStorage.getItem('token')) localStorage.setItem('token', res.token);
+          console.log(res.token);
+          localStorage.setItem('token', res.token);
+          sessionStorage.setItem('token', res.token);
+          // console.log('before:', localStorage.getItem('token'));
+          // if (res.token && res.token !== localStorage.getItem('token')) localStorage.setItem('token', res.token);
           this.set('authstatus', true)
             .then(this.set('userslogin', creds.user))
-            .then(this.set('token', localStorage.getItem('token')))
             .then(
-              console.log('after', localStorage.getItem('token')),
+            // console.log('after', localStorage.getItem('token')),
               Route.push('Dashboard')
             );
           resolve(res);

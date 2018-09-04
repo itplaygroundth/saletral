@@ -6,7 +6,7 @@ export default [
       public: true,
     },
     redirect: {
-      path: '/404'
+      path: '/login'
     }
   },  
   {
@@ -48,7 +48,7 @@ export default [
   {
     path: '/login',
     meta: {
-      public: true,
+      public: true
     },
     name: 'Login',
     component: () => import(
@@ -62,7 +62,7 @@ export default [
     meta: { },
     name: 'Root',
     redirect: {
-      name: 'Dashboard'
+      name: 'Login'
     }
   },
   {
@@ -97,7 +97,7 @@ export default [
     children: [
       {
         path: '/products/product',
-        meta: { breadcrumb: true, requiresAuth: true, root: 'productcontrol', navigation: 'AppLocalToolbar' },
+        meta: { breadcrumb: true, requiresAuth: false, root: 'productcontrol', navigation: 'AppLocalToolbar' },
         name: 'product',
         component: () => import(
           /* webpackChunkName: "routes" */
@@ -108,7 +108,7 @@ export default [
       },
       {
         path: '/products/orderproduct',
-        meta: { breadcrumb: true, requiresAuth: true, root: 'productcontrol', navigation: 'AppToolbar' },
+        meta: { breadcrumb: true, requiresAuth: false, root: 'productcontrol', navigation: 'AppToolbar' },
         name: 'orderproduct',
         component: () => import(
           /* webpackChunkName: "routes" */
@@ -119,7 +119,7 @@ export default [
 
       {
         path: '/products/orderproductsub',
-        meta: { breadcrumb: true, root: 'productcontrol', requiresAuth: true, transitionName: 'slide', navigation: 'AppToolbar' },
+        meta: { breadcrumb: true, root: 'productcontrol', requiresAuth: false, transitionName: 'slide', navigation: 'AppToolbar' },
         name: 'orderproductsub',
         component: () => import(
           /* webpackChunkName: "routes" */

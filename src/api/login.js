@@ -70,14 +70,14 @@ export default {
         if (user.token) {
           // console.log(user.token);
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('token', JSON.stringify(user.token));
+          // localStorage.setItem('token', JSON.stringify(user.token));
         }
 
         return user;
       });
   }, logout () {
   // remove user from local storage to log user out
-    localStorage.removeItem('token');
+    localStorage.setItem('token', null);
     
   }, register (user) {
     const requestOptions = {

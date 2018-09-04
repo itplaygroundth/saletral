@@ -18,30 +18,46 @@ const router =  new Router({
 // router gards
 router.beforeEach((to, from, next) => {
 
-  
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    // .getItem('token'));
-    console.log(localStorage.getItem('token'));
-    // console.log(to.meta.navigation);
-    // this.$store.dispatch('selectComponent', this.users);
-    if (localStorage.getItem('token') === '' || localStorage.getItem('token') === null) { // .getItem('token')) {
-      // console.log(localStorage);
-      next({
-        path: '/login',
-        query: {
-          redirect: to.fullPath,
-        },
-      });
-    } else {
-      store.dispatch('setComponent', to.meta.navigation);
-      // console.log(store.getters['selectedComponent']);
-      next();
-    }
-  } else {
-    store.dispatch('setComponent', to.meta.navigation);
-    // console.log(store.getters['selectedComponent']);
+  let requireAuthen = to.matched.some(record => record.meta.requiresAuth);
+  let token = localStorage.getItem('token') || sessionStorage.getItem('token');
+  console.log(requireAuthen, token, to.path);
+  if (requireAuthen && token === null) {
+    console.log(requireAuthen, token);
+    next('Login');
+  } else if (!requireAuthen && token !== null) { 
     next();
   }
+  else { 
+    next();
+  }
+  store.dispatch('setComponent', to.meta.navigation);
+  // .getItem('token'));
+  // console.log(localStorage.getItem('token'));
+  // console.log(to.meta.navigation);
+  // this.$store.dispatch('selectComponent', this.users);
+  // console.log(localStorage.getItem('token'), to.path); 
+  // if (localStorage.getItem('token') === null && to.path !== '/login') { // .getItem('token')) {
+    
+  //   next({
+  //     path: '/login',
+  //     query: {
+  //       redirect: '/login',
+  //     },
+  //   });
+    
+  // } else {
+  //   store.dispatch('setComponent', to.meta.navigation);
+  //   console.log(to);
+  //   // console.log(store.getters['selectedComponent']);
+  //   next(to.fullPath);
+  // }
+  
+  //   else {
+  //   store.dispatch('setComponent', to.meta.navigation);
+  //   // console.log(store.getters['selectedComponent']);
+  //   console.log(to.fullPath);
+  //   next(to.fullPath);
+  // }
 });
 //   // NProgress.start();
 //   // next();
