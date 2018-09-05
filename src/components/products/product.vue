@@ -71,6 +71,14 @@
               hide-details
             ></v-switch>
                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                 <v-switch
+              v-model="editedItem.itemstatus"
+              :label="checkitemstatus()"
+              color="success"
+              hide-details
+            ></v-switch>
+                 </v-flex>
               </v-layout>
                 </v-flex>
                 <v-flex lg6 md4>
@@ -559,6 +567,16 @@ export default {
     showdialog () {
       this.dialogtitle = this.$t('label.product.newitem');
       // console.log(this.dialogtitle);
+    },
+    checkitemstatus () {
+      let lb = '';
+      // console.log(this.editedItem.activestatus);
+      // if (this.editedIndex > -1) {
+      this.editedItem.itemstatus === false || this.editedItem.itemstatus === 0 ? lb = 'สินค้า' : lb = 'วัตถุดิบ';
+      // this.editedItem.activestatus === 0 ? lb = 'ไม่ทำงาน' : lb = 'ทำงาน';
+      // console.log(this.desserts[this.editedIndex]);
+      // }
+      return lb;
     },
     checkstatus () {
       let lb = '';

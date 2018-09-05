@@ -20,9 +20,9 @@ router.beforeEach((to, from, next) => {
 
   let requireAuthen = to.matched.some(record => record.meta.requiresAuth);
   let token = localStorage.getItem('token') || sessionStorage.getItem('token');
-  console.log(requireAuthen, token, to.path);
+  // console.log(requireAuthen, token, to.path);
   if (requireAuthen && token === null) {
-    console.log('go login');
+  //  console.log('go login');
     next('Login');
   } else if (!requireAuthen && token !== null) { 
     next();

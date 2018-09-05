@@ -2,7 +2,8 @@ import config from './config.js';
 import login from './login';
 import Axios from '../../node_modules/axios';
 const AUTH_TOKEN = `${sessionStorage.getItem('token')}`;
-Axios.defaults.headers.common = { 'Authorization': 'bearer ' + AUTH_TOKEN };
+// console.log(AUTH_TOKEN);
+// Axios.defaults.headers.common = { 'Authorization': 'bearer ' + AUTH_TOKEN };
 
 // Axios.defaults.headers.common['Authorization'] = `${localStorage.getItem('token')}`;
 
@@ -20,10 +21,12 @@ export default {
       headers: login.getAuthHeader(),
       
     };
-    console.log(Axios.defaults.headers.common);
+    // console.log(Axios.defaults.headers.common);
     return Axios.get(`${login.API_URL}item`, requestOptions).then(this.handleResponse);
   },
   getItem (val) {
+    if (AUTH_TOKEN == null) Axios.defaults.headers.common = { 'Authorization': `bearer ${localStorage.getItem('token')}` };
+    // console.log(AUTH_TOKEN);
     const requestOptions = {
       headers: login.getAuthHeader(),
       method: 'GET'
@@ -41,13 +44,15 @@ export default {
        
   },
   getAItem () {
+    if (AUTH_TOKEN == null) Axios.defaults.headers.common = { 'Authorization': `bearer ${localStorage.getItem('token')}` };
+     
     const requestOptions = {
       headers: login.getAuthHeader(),
       method: 'GET'
     };
       
     let url = `${config.API_URL}item`;
-    console.log(AUTH_TOKEN);
+    // console.log(AUTH_TOKEN);
     const result = Axios.get(url, requestOptions)
       .then(response => {
         return Promise.resolve(response.data);
@@ -58,6 +63,8 @@ export default {
        
   },
   getCount () {
+    if (AUTH_TOKEN == null) Axios.defaults.headers.common = { 'Authorization': `bearer ${localStorage.getItem('token')}` };
+
     const requestOptions = {
       method: 'GET',
       headers: login.getAuthHeader()
@@ -66,6 +73,8 @@ export default {
     return Axios.get(`${config.API_URL}item/count`, requestOptions).then(this.handleResponse);
   },
   insertItem (data) {
+    if (AUTH_TOKEN == null) Axios.defaults.headers.common = { 'Authorization': `bearer ${localStorage.getItem('token')}` };
+
     const requestOptions = {
       method: 'POST',
       headers: login.getAuthHeader(),
@@ -76,6 +85,8 @@ export default {
     return Axios.post(`${config.API_URL}item`, requestOptions).then(this.handleResponse);
   },
   updateItem (data) {
+    if (AUTH_TOKEN == null) Axios.defaults.headers.common = { 'Authorization': `bearer ${localStorage.getItem('token')}` };
+
     const requestOptions = {
       method: 'PUT',
       headers: login.getAuthHeader(),
@@ -85,8 +96,6 @@ export default {
     return Axios.put(`${config.API_URL}item`, requestOptions).then(this.handleResponse);
   },
   handleResponse (response) {
-    
-   
     const data = response.data;
     
     if (!response.data) {
@@ -104,6 +113,7 @@ export default {
   
   },
   getAuthHeader () {
+    
     // Axios.defaults.headers.common['Authorization'] = `${localStorage.getItem('token')}`;
     // console.log(`${localStorage.getItem('token')}`);
     return {

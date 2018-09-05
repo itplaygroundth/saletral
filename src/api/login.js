@@ -4,8 +4,8 @@ const bcrypt = require('bcryptjs');
 
 const API_URL = 'https://vps434.vpshispeed.net/sapi/';
 const LOGIN_URL = API_URL + 'getdb/';
-const AUTH_TOKEN = `${sessionStorage.getItem('token')}`;
-Axios.defaults.headers.common = { 'Authorization': 'bearer ' + AUTH_TOKEN };
+// const AUTH_TOKEN = `${sessionStorage.getItem('token')}`;
+// Axios.defaults.headers.common = { 'Authorization': 'bearer ' + AUTH_TOKEN };
 // Axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // const SIGNUP_URL = API_URL + 'register/'
 
@@ -100,10 +100,15 @@ export default {
     const requestOptions = {
       method: 'GET',
       headers: this.getAuthHeader()
+
     };
 
     return Axios.get(`${API_URL}/users/${id}`, requestOptions).then(this.handleResponse);
+
+    
   },
+    
+
   update (user) {
     const requestOptions = {
       method: 'PUT',
@@ -150,6 +155,7 @@ export default {
       'Access-Control-Allow-Methods': 'DELETE, HEAD, GET, OPTIONS, POST, PUT',
       'Access-Control-Allow-Headers': 'Content-Type, Content-Range, Content-Disposition, Content-Description',
       'Access-Control-Max-Age': '1728000',
+      'Authorization': `bearer ${localStorage.getItem('token')}`
     };
   }
 };

@@ -1,12 +1,11 @@
 <template>
-  <v-layout row class="align-center layout px-4 pt-4 app--page-header">
+  <v-layout row class="align-center layout px-4 pt-4 app--page-header" color="white lighten-1">
    
-     <v-toolbar 
-   color="green lighten-3"
-  >
-     <div class="page-header-left">
-      
-    </div>
+     <!-- <v-toolbar 
+   color="white lighten-3"
+  > -->
+  <v-card width="100%">
+      <v-card-actions>
     <v-breadcrumbs divider="-">
       <v-breadcrumbs-item>
       <v-icon large>home</v-icon>
@@ -21,7 +20,6 @@
          
           <v-icon>more_vert</v-icon>
         </v-toolbar-title>
-
         <v-list >
           <v-list-tile
             v-for="(it,key) in menubtn" :key="key" >
@@ -30,14 +28,29 @@
         </v-list>
       </v-menu>
     <v-spacer></v-spacer>
+    
     <v-toolbar-items class="hidden-md-and-down">
-      <v-btn flat 
+       <v-tabs
+        slot="extension"
+        v-model="tab"
+        color="transparent"
+      > 
+        <v-tabs-slider color="primary"></v-tabs-slider>
+
+        <v-tab v-for="(item,key) in menubtn" :key="key" @click.stop="gotoPage(item)">
+         {{ item.name | translate }}
+        </v-tab>
+      </v-tabs>
+      <!-- <v-btn flat 
       v-for="(item,key) in menubtn" :key="key" @click.stop="gotoPage(item)"
       > {{ item.name | translate }}</v-btn>
-     
+      -->
     </v-toolbar-items>
-  </v-toolbar>
-  </v-layout>  
+  <!-- </v-toolbar> -->
+  </v-card-actions>
+  </v-card>
+  </v-layout> 
+  
 </template>
 
 <script>

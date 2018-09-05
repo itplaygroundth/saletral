@@ -66,7 +66,8 @@
   "name":"settings",
   "items":[
     {"icon":"dns","color":"blue","name":"ค่าเริ่มต้น","link":"setting","child":false},
-    {"icon":"account_balance","color":"red","name":"คลังสินค้า","link":"warehouse","child":false}
+    {"icon":"account_balance","color":"red","name":"คลังสินค้า","link":"warehouse","child":false},
+    {"icon":"group","color":"red","name":"พนักงาน","link":"users","child":false}
   ]
 }
 ]},
