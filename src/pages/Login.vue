@@ -27,6 +27,7 @@
                 </v-btn>
                 <v-spacer></v-spacer>
                 <v-btn block color="primary" @click="login" :loading="loading">Login</v-btn>
+                <v-btn block color="warning" @click="register" :loading="loading">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -54,7 +55,14 @@ export default {
       setTimeout(() => {
         this.$router.push('/dashboard');
       }, 1000);
+    },
+    register () {
+      this.loading = true;
+      setTimeout(() => {
+        this.$router.push('/Register');
+      }, 1000);
     }
+    
   },
   
 };

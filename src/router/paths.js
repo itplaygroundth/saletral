@@ -66,6 +66,18 @@ export default [
     }
   },
   {
+    path: '/register',
+    meta: {
+      public: true
+    },
+    name: 'Register',
+    component: () => import(
+      /* webpackChunkName: "routes" */
+      /* webpackMode: "lazy-once" */
+      `@/components/auth/Register.vue`
+    )
+  },
+  {
     path: '/dashboard',
     meta: { breadcrumb: true, requiresAuth: true },
     name: 'Dashboard',

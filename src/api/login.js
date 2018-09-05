@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 
 const API_URL = 'https://vps434.vpshispeed.net/sapi/';
 const LOGIN_URL = API_URL + 'getdb/';
-const AUTH_TOKEN = `${localStorage.getItem('token')}`;
+const AUTH_TOKEN = `${sessionStorage.getItem('token')}`;
 Axios.defaults.headers.common = { 'Authorization': 'bearer ' + AUTH_TOKEN };
 // Axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // const SIGNUP_URL = API_URL + 'register/'
@@ -82,11 +82,11 @@ export default {
   }, register (user) {
     const requestOptions = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getAuthHeader(),
       body: JSON.stringify(user)
     };
 
-    return Axios.post(`${API_URL}/users/register`, requestOptions).then(this.handleResponse);
+    return Axios.post(`${API_URL}users/register`, requestOptions).then(this.handleResponse);
   },
   getAll () {
     const requestOptions = {

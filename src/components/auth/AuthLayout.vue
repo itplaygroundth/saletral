@@ -18,6 +18,7 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn block color="primary" @click="login" :loading="loading">Login</v-btn>
+                <v-btn block color="warning" @click="register" :loading="loading">Register</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -30,7 +31,7 @@
 <script>
 import auth from './../../api/login';
 import { get, sync, call } from 'vuex-pathify';
- 
+import  Router from './../../router';
 
 export default {
 
@@ -71,8 +72,11 @@ export default {
     logout () {
       
       this.$store.dispatch('logOUT');
+    },
+    register () {
+      
+      Router.replace('/register');
     }
-   
   }
 };
 </script>

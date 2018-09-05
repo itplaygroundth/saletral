@@ -22,7 +22,7 @@ router.beforeEach((to, from, next) => {
   let token = localStorage.getItem('token') || sessionStorage.getItem('token');
   console.log(requireAuthen, token, to.path);
   if (requireAuthen && token === null) {
-    console.log(requireAuthen, token);
+    console.log('go login');
     next('Login');
   } else if (!requireAuthen && token !== null) { 
     next();

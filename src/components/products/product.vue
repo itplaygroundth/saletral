@@ -433,7 +433,7 @@ export default {
        
       let result = ap.getAItem().then(res => {
         
-        return JSON.parse(JSON.stringify(res.data));
+        return res.data;
       });
       if (val) {
         result = ap.getItem(val).then(res => {
@@ -509,7 +509,7 @@ export default {
         this.editedItem.picfilename2 = this.pictures[1];
         this.editedItem.picfilename3 = this.pictures[2];
         this.editedItem.picfilename4 = this.pictures[3];
-        
+        console.log(this.desserts);
         this.desserts.push(this.editedItem);
         // .then(data => {
         // console.log('insert');

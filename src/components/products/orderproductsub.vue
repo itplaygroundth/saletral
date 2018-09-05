@@ -171,7 +171,7 @@ export default {
     },
     itemselected () {
       console.log(this.items);
-      // console.log(this.$store.getters['itemselected']);
+      console.log(this.$store.getters['itemselected']);
       let _item = this.$store.getters['itemselected'];
 
       // this.items.reduce((total, item) => total + item.data.reduce((a, b) => a + b), 0);
@@ -186,6 +186,7 @@ export default {
       }
       // this.items.push(this.$store.getters['itemselected']);
       localStorage.setItem('items', JSON.stringify(this.items));
+      sessionStorage.setItem('items', JSON.stringify(this.items));
       // console.log(this.items);
       // console.log(this.$store.getters['itemselected']);
       
@@ -204,6 +205,7 @@ export default {
     items () 
     {
       localStorage.setItem('items', JSON.stringify(this.items));
+      sessionStorage.setItem('items', JSON.stringify(this.items));
     }
     
  
@@ -211,7 +213,8 @@ export default {
   created () {
     this.docno = this.$store.getters['orderproduct'].docno;
     // console.log(localStorage.getItem('items'));
-    this.items = JSON.parse(localStorage.getItem('items'));
+
+    this.items = JSON.parse(localStorage.getItem('items')).length === 0 ? JSON.parse(sessionStorage.getItem('items')) : JSON.parse(localStorage.getItem('items'));
   },
   mounted () {
     this.headback = this.$store.getters['headback'];
@@ -255,6 +258,7 @@ export default {
     reset () {
       this.items = [];
       localStorage.setItem('items', []);
+      sessionStorage.setItem('items', []);
       // this.items = JSON.parse(localStorage.getItem('items'));
     },
     open () {

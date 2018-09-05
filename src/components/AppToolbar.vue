@@ -22,7 +22,6 @@
      :max-height="400" 
      :show-no-results="false" 
      :hide-selected="true" 
-     @select="selecteditem" 
      @search-change="initialize" 
      :placeholder="slabel"
      group-values="data" group-label="categorys"
@@ -178,7 +177,12 @@ export default {
     }
   },
   watch: {
-  
+    value () {
+      // console.log(this.vaule);
+      this.selecteditem(this.value);
+      return this.value;
+      
+    }
   },
   created () {
     // this.initialize();
@@ -256,9 +260,10 @@ export default {
       return `${code} – ${name1}`;
     },
     selecteditem (val) {
+      console.log(val);
       this.$store.set('itemselected', '');
       this.$store.set('itemselected', val);
-      // console.log(val);
+      
     },
     loadpic (src) {
       return ap.url + src;
@@ -268,7 +273,15 @@ export default {
 </script>
 <style lang="stylus" scoped>
   @import("https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css")
-
+ .multiselect {
+    box-sizing: content-box;
+    display: block;
+    position: relative;
+    width: 50%;
+    min-height: 40px;
+    text-align: left;
+    color: #35495e;
+}
  .flag-icon-large {
       width: 31px;
       height: 23px;

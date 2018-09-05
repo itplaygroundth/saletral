@@ -1,7 +1,7 @@
 import config from './config.js';
 import login from './login';
 import Axios from '../../node_modules/axios';
-const AUTH_TOKEN = `${localStorage.getItem('token')}`;
+const AUTH_TOKEN = `${sessionStorage.getItem('token')}`;
 Axios.defaults.headers.common = { 'Authorization': 'bearer ' + AUTH_TOKEN };
 
 // Axios.defaults.headers.common['Authorization'] = `${localStorage.getItem('token')}`;
