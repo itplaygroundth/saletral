@@ -25,6 +25,7 @@
      @search-change="initialize" 
      :placeholder="slabel"
      group-values="data" group-label="categorys"
+      class="hidden-md-and-down"
      >
           <template slot="option" slot-scope="props">
          <v-flex xs12 sm6 md6><img class="option__image" :src="loadpic(props.option.picfilename1)" ></v-flex>

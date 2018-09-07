@@ -18,10 +18,18 @@
         
         <v-card>
           <v-card-title class="headline grey lighten-2" primary-title>
-            <span class="headline">{{ dialogtitle }}</span>
-              <v-spacer></v-spacer>
-            <v-btn color="warning darken-1" @click.native="close">{{ $t("button.cancel") }}</v-btn>
-            <v-btn color="success darken-1" @click.native="save">{{ $t("button.save") }}</v-btn>
+             <v-layout wrap>
+                 <v-flex xs12 sm6 md4>
+                  <span class="headline">{{ dialogtitle }}</span>
+                </v-flex>
+             <v-spacer></v-spacer>
+               <v-flex xs6 sm6 md4>
+                 <v-btn color="warning darken-1" @click.native="close">{{ $t("button.cancel") }}</v-btn>
+                </v-flex>
+             <v-flex xs6 sm6 md4>
+                  <v-btn color="success darken-1" @click.native="save">{{ $t("button.save") }}</v-btn>
+                </v-flex>
+             </v-layout>
           </v-card-title>
 
           <v-card-text>
