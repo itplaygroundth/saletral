@@ -147,15 +147,16 @@ export default {
     return data;
   },
   getAuthHeader () {
-    // console.log(`${localStorage.getItem('token')}`);
+    console.log(`${localStorage.getItem('token')}`);
     return {
+      'Authorization': `bearer ${localStorage.getItem('token')}`,
       'Content-Type': 'application/json;charset=UTF-8',
       'Accept': 'application/json',
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'DELETE, HEAD, GET, OPTIONS, POST, PUT',
       'Access-Control-Allow-Headers': 'Content-Type, Content-Range, Content-Disposition, Content-Description',
       'Access-Control-Max-Age': '1728000',
-      'Authorization': `bearer ${localStorage.getItem('token')}`
+      
     };
   }
 };

@@ -25,7 +25,7 @@ export default {
     return Axios.get(`${login.API_URL}item`, requestOptions).then(this.handleResponse);
   },
   getItem (val) {
-    if (AUTH_TOKEN == null) Axios.defaults.headers.common = { 'Authorization': `bearer ${localStorage.getItem('token')}` };
+  // if (AUTH_TOKEN == null) Axios.defaults.headers.common = { 'Authorization': `bearer ${localStorage.getItem('token')}` };
     // console.log(AUTH_TOKEN);
     const requestOptions = {
       headers: login.getAuthHeader(),
@@ -44,7 +44,7 @@ export default {
        
   },
   getAItem () {
-    if (AUTH_TOKEN == null) Axios.defaults.headers.common = { 'Authorization': `bearer ${localStorage.getItem('token')}` };
+  // if (AUTH_TOKEN == null) Axios.defaults.headers.common = { 'Authorization': `bearer ${localStorage.getItem('token')}` };
      
     const requestOptions = {
       headers: login.getAuthHeader(),
@@ -63,7 +63,7 @@ export default {
        
   },
   getCount () {
-    if (AUTH_TOKEN == null) Axios.defaults.headers.common = { 'Authorization': `bearer ${localStorage.getItem('token')}` };
+  // if (AUTH_TOKEN == null) Axios.defaults.headers.common = { 'Authorization': `bearer ${localStorage.getItem('token')}` };
 
     const requestOptions = {
       method: 'GET',
@@ -73,7 +73,7 @@ export default {
     return Axios.get(`${config.API_URL}item/count`, requestOptions).then(this.handleResponse);
   },
   insertItem (data) {
-    if (AUTH_TOKEN == null) Axios.defaults.headers.common = { 'Authorization': `bearer ${localStorage.getItem('token')}` };
+  // if (AUTH_TOKEN == null) Axios.defaults.headers.common = { 'Authorization': `bearer ${localStorage.getItem('token')}` };
 
     const requestOptions = {
       method: 'POST',
@@ -85,7 +85,7 @@ export default {
     return Axios.post(`${config.API_URL}item`, requestOptions).then(this.handleResponse);
   },
   updateItem (data) {
-    if (AUTH_TOKEN == null) Axios.defaults.headers.common = { 'Authorization': `bearer ${localStorage.getItem('token')}` };
+  // if (AUTH_TOKEN == null) Axios.defaults.headers.common = { 'Authorization': `bearer ${localStorage.getItem('token')}` };
 
     const requestOptions = {
       method: 'PUT',

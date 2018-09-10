@@ -5,7 +5,7 @@
   "author": "Micahel Wang <wangqiangshen@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --host 192.168.1.168",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --host 0.0.0.0",
     "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",
@@ -41,7 +41,7 @@
     "vue-sweetalert2": "^1.5.0",
     "vue2-animate": "^2.0.0",
     "vue2-dropzone": "^3.2.2",
-    "vuetify": "^1.1.0-alpha.5",
+    "vuetify": "^1.2.3",
     "vuex": "^3.0.1",
     "vuex-i18n": "^1.10.5",
     "vuex-pathify": "^1.1.2"
