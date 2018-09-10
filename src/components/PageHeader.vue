@@ -4,7 +4,7 @@
      <!-- <v-toolbar 
    color="white lighten-3"
   > -->
-  <v-card width="100%">
+  <v-card width="100%" class="hidden-md-and-down">
       <v-card-actions>
     <v-breadcrumbs divider="-">
       <v-breadcrumbs-item>
