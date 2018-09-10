@@ -90,10 +90,12 @@
      
             <v-card-text class="">
             
-               <div class="pl-1 pb-1">
+               <div class="pl-1">
                      <label>{{ $t("label.orderproduct.apname") }}</label>
                </div>
-               <v-autocomplete
+               <v-layout row>
+               <v-flex xs10>
+      <v-autocomplete
       v-model="model"
       :items="items"
       :loading="isLoading"
@@ -102,17 +104,42 @@
       hide-selected
       item-text="name1"
       item-value="code"
-      
+      width="100px"
        
-    >
-     
-    </v-autocomplete>
-            <div class="pl-1 pt-4 pb-4">
+    > </v-autocomplete></v-flex>
+
+    <v-flex slot="append-outer" xs2>
+    <v-btn
+              color="pink"
+              dark
+              small
+              bottom
+              right
+              fab
+              @click="showdialog" 
+            >
+            
+              <v-icon>add</v-icon>
+              </v-btn>
+              </v-flex>
+                <v-dialog v-model="dialog" max-width="1000px" scrollable transition="dialog-bottom-transition">
+                <v-card>
+          <v-card-title class="headline grey lighten-2" primary-title>
+            <span class="headline">{{ dialogtitle }}</span>
+              <v-spacer></v-spacer>
+           
+          </v-card-title>
+                </v-card>
+                
+                </v-dialog>
+     </v-layout>
+            <div class="pl-1 pt-2 pb-4">
  
              <label>{{ $t("label.orderproduct.docno") }}</label>
              </div>
            
             <v-text-field prepend-icon="event" v-model="docno"></v-text-field>
+           
              </v-card-text>  
           </v-card>
         </v-flex>
@@ -164,7 +191,7 @@ export default {
     duedate: '', // this.formatDate(this.$moment().format('YYYY-MM-DD')),
     date2: '', // this.$moment().format('DD/MM/YYYY'),
     mask: '##/##/####',
-    
+    dialog: false,
     isLoading: false,
     items: [],
     model: null,
@@ -408,7 +435,11 @@ export default {
       // console.log(`${this.$route.name}/${item}`);
       router.name = item;
       router.push({ name: `${item}` });
+    },
+    showdialog () {
+      this.dialog = true;
     }
+    
    
   }
 };

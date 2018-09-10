@@ -101,12 +101,6 @@
             
             </v-container>
           </v-card-text>
-
-          <!-- <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click.native="close">{{ $t("button.cancel") }}</v-btn>
-            <v-btn color="blue darken-1" flat @click.native="save">{{ $t("button.save") }}</v-btn>
-          </v-card-actions> -->
         </v-card>
       </v-dialog>
        </form>
