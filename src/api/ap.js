@@ -19,6 +19,14 @@ export default {
     
     return Axios.get(`${config.API_URL}ap/count`, requestOptions).then(this.handleResponse);
   },
+  insert (data) {
+    const requestOptions = {
+      method: 'POST',
+      headers: login.getAuthHeader(),
+      data: data
+    };
+    return Axios.post(`${config.API_URL}ap/insert`, requestOptions).then(this.handleResponse);
+  },
   handleResponse (response, next) {
     
    

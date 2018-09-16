@@ -122,14 +122,54 @@
               <v-icon>add</v-icon>
               </v-btn>
               </v-flex>
-                <v-dialog v-model="dialog" max-width="1000px" scrollable transition="dialog-bottom-transition">
-                <v-card>
+                <v-dialog v-model="dialog" max-width="600px" scrollable transition="dialog-bottom-transition">
+                  
+              <v-card>
           <v-card-title class="headline grey lighten-2" primary-title>
-            <span class="headline">{{ dialogtitle }}</span>
-              <v-spacer></v-spacer>
-           
+             <v-layout wrap>
+                 <v-flex xs12 sm6 md4>
+                  <span class="headline"></span>
+                </v-flex>
+             <v-spacer></v-spacer>
+               <v-flex xs6 sm6 md4>
+                 <v-btn color="warning darken-1" @click.native="close">{{ $t("button.cancel") }}</v-btn>
+                </v-flex>
+             <v-flex xs6 sm6 md4>
+                  <v-btn color="success darken-1" @click.native="save">{{ $t("button.save") }}</v-btn>
+                </v-flex>
+             </v-layout>
           </v-card-title>
-                </v-card>
+
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex lg12 md6>
+              <v-layout wrap>
+                <v-flex xs12 sm6 md6>
+                  <v-text-field v-model="editedItem.code" :label="this.$t('label.apcode.code')"></v-text-field>
+                </v-flex>
+              </v-layout>
+               <v-layout wrap>
+                <v-flex xs12 sm6 md12>
+                  <v-text-field v-model="editedItem.name1" :label="this.$t('label.apcode.name1')"></v-text-field>
+                </v-flex>
+               </v-layout>
+                <v-layout wrap>
+                 <v-flex xs12 sm6 md12>
+                  <v-text-field v-model="editedItem.address" :label="this.$t('label.apcode.address')"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md12>
+                  <v-text-field v-model="editedItem.telephone" :label="this.$t('label.apcode.telephone')"></v-text-field>
+                </v-flex>
+              </v-layout>
+                </v-flex>
+                
+              </v-layout>
+             <v-divider></v-divider>
+            
+            </v-container>
+          </v-card-text>
+              </v-card>
                 
                 </v-dialog>
      </v-layout>
@@ -196,7 +236,15 @@ export default {
     items: [],
     model: null,
     search: null,
-    issubmit: false
+    issubmit: false,
+    editedItem: {
+      code: '',
+      name1: '',
+      telephone: '',
+      tags: '',
+      address: '',
+      pictures: []
+    },
 
   }),
   
@@ -279,20 +327,9 @@ export default {
 
     this.isLoading = true;
     this.headback = true;
+    this.loadap();
     // console.log(typeof this.$store.getters['orderproduct'].apcode);
     // Lazily load input items
-    ap.getAll()
-      .then(res => {
-
-        this.items = res.rows;
-        const dump = this.items.find(item => {
-          // console.log(item.code, this.model);
-          return item.code === typeof this.$store.getters['orderproduct'].apcode === 'object' ? this.$store.getters['orderproduct'].apcode.code : this.$store.getters['orderproduct'].apcode;
-        });
-        this.model = dump;
-        // this.search = dum.name1;
-      })
-      .finally(() => { this.isLoading = false });
     // console.log({ docno: this.docno, docdate: this.dateFormatted, duedate: this.duedate, apcode: this.model, apname: this.search });
 
   },
@@ -324,6 +361,22 @@ export default {
      
   },
   methods: {
+    loadap () {
+      this.isLoading = true;
+      ap.getAll()
+        .then(res => {
+
+          this.items = res.rows;
+          const dump = this.items.find(item => {
+          // console.log(item.code, this.model);
+            return item.code === typeof this.$store.getters['orderproduct'].apcode === 'object' ? this.$store.getters['orderproduct'].apcode.code : this.$store.getters['orderproduct'].apcode;
+          });
+          this.model = dump;
+        // this.search = dum.name1;
+        })
+        .finally(() => { this.isLoading = false });
+
+    },
     formatDate (date) {
       if (!date) return null;
 
@@ -360,6 +413,24 @@ export default {
       return textOne.indexOf(searchText) > -1 ||
         textTwo.indexOf(searchText) > -1;
     },
+    // headers (show) {
+    //   // 
+    //   let head = JSON.parse(JSON.stringify(this.$t('label.apcode')));
+    
+    //   if (show) {
+    //     head = JSON.parse(JSON.stringify(this.$t('label.apcode'))).filter(element => {
+    //       // console.log(element);
+    //       return element.show === true;
+    //     });
+    //   }  
+    //   // console.log(head);
+    //   return head;// JSON.parse(JSON.stringify(this.$t('label.product.headers')));
+    // },
+    // scode (field) {
+    //   let menu = this.headers(false).filter(element => element === field);
+       
+    //   return menu[0];
+    // },
     submit () {
       let timerInterval;
       // swal({
@@ -409,6 +480,23 @@ export default {
       this.model = '';
       this.issubmit = false;
     },
+    save () {
+      ap.insert(this.editedItem).then(res => {
+        
+        this.dialog = false;
+        this.editedItem.code = '';
+        this.editedItem.name1 = '';
+        this.editedItem.address = '';
+        this.editedItem.telephon = '';
+        this.loadap();
+
+      });
+      
+
+    },
+    close () {
+      this.dialog = false;
+    },
     initData () {
       this.duedate = this.formatDate(this.$moment().format('YYYY-MM-DD'));
       this.date = this.$moment().format('YYYY-MM-DD');
@@ -424,10 +512,12 @@ export default {
        
       switch (event.keyCode) {
         case 121:
-          this.submit();
+         
+          if (this.dialog) this.save(); else this.submit();
           break;
         case 27:
-          this.clear();
+          
+          if (this.dialog) this.close(); else this.clear();
           break;
       }
     },

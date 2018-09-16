@@ -62,7 +62,8 @@ export default {
   },
   data () {
     return {
-      title: ''
+      title: '',
+      tab: ''
     };
   },
   computed: {

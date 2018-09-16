@@ -170,10 +170,10 @@ export default {
       return this.$store.getters['headback'];
     },
     itemselected () {
-      console.log(this.items);
-      console.log(this.$store.getters['itemselected']);
+      // console.log(this.items);
+      // console.log(this.$store.getters['itemselected']);
       let _item = this.$store.getters['itemselected'];
-
+      // console.log(_item);
       // this.items.reduce((total, item) => total + item.data.reduce((a, b) => a + b), 0);
       
       if (this.items.length > 0) { 

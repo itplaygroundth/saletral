@@ -124,7 +124,7 @@
                :search="search"
                expand
                hide-actions
-               class="elevation-2">
+               class="elevation-2 hidden-md-and-down">
    <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>             
   <template slot="items" slot-scope="props">
     <tr @click.stop=" dialog ===false ? props.expanded = !props.expanded : false">
@@ -175,8 +175,51 @@
         <v-btn color="primary" @click="initialize">Reset</v-btn>
       </template>
  </v-data-table> 
-  <div class="text-xs-center pt-2">
+  <div class="text-xs-center pt-2 hidden-md-and-down">
       <v-pagination v-model="pagination.page" total-visible="7" :length="pages"></v-pagination>
+    </div>
+    <div class="hidden-md-and-up">
+        <v-layout row wrap>
+            <v-flex
+              xs12
+              md6
+              lg3
+              v-for="n in desserts"
+              :key="n"
+            >
+            
+      <v-card>
+      <v-layout row>
+                <v-flex xs7>
+                  <v-card-title primary-title>
+                    <div>
+                      <div class="headline">{{n.name1}}</div>
+                      <div>{{n.stockqty}}</div>
+                      <div>{{n.price}}</div>
+                    </div>
+                  </v-card-title>
+                </v-flex>
+                <v-flex xs5>
+                  <v-img
+                    :src="loadpic(n.picfilename1)"
+                    height="125px"
+                    contain
+                  ></v-img>
+                </v-flex>
+              </v-layout>
+              <v-divider light></v-divider>
+              <v-card-actions class="pa-3">
+                Rate this album
+                <v-spacer></v-spacer>
+                <v-icon>star_border</v-icon>
+                <v-icon>star_border</v-icon>
+                <v-icon>star_border</v-icon>
+                <v-icon>star_border</v-icon>
+                <v-icon>star_border</v-icon>
+              </v-card-actions>
+            </v-card>
+            </v-flex>
+        </v-layout>
     </div>
       </v-flex>
     </v-layout>
@@ -611,6 +654,10 @@ export default {
           break;
       }
     },
+    loadpic (src) {
+      if (typeof src !== 'undefined' && src !== null) return null; else return `${ap.url}images/${src}`;
+     
+    }
     
   }
 };

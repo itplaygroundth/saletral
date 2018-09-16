@@ -111,6 +111,7 @@
     ,"label":
     {
       "toolbar":{ "search":"ค้นหา" },
+      "apcode": { "title1":"รหัสเจ้าหนี้","code":"รหัส","name1":"ชื่อ","address":"ที่อยู่","telephone":"โทรศัพท์" },
       "orderproduct":{"title1":"วันที่","title2":"รหัสคู่ค้า/เลขที่เอกสาร","docno1":"เลขที่ใบสั่งสินค้า","docno":"เลขที่เอกสาร","docdate":"วันที่เอกสาร","apcode":"รหัสคู่ค้า","apname":"ชื่อคู่ค้า","duedate":"วันครบกำหนด",
         "headers":[
           {"text":"ลำดับ", "value": "index","show":true, "sortable": false },
@@ -140,6 +141,7 @@
         { "text": "Color", "value": "color" },
         { "text": "Value", "value": "value" }
       ]}
+     
     },
     "error":
     {

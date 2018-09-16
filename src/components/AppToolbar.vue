@@ -191,6 +191,7 @@ export default {
   methods: {
     initialize (query) {
       this.loading = true;
+      // console.log('step1');
       this.getItem(query).then(data => {
         if (typeof data !== 'undefined') this.items = [{ 'category': 'stock', data }];
         // console.log(this.items);
@@ -225,7 +226,7 @@ export default {
         this.getItem(val).then(rows => {
 
           let items = this.items = { 'category': 'stock', rows };
-          console.log(items);
+          // console.log(items);
           const total = typeof items === 'undefined' ? 0 : items.length;
        
         
@@ -242,14 +243,10 @@ export default {
       });
     },
     getItem (val) {
-      // console.log(val);
+       
       return ap.getItem(val).then(res => {
         
         let _items = JSON.parse(JSON.stringify(res.data));
-        // console.log(_items);
-        // let data =  grouping(res.data, 'categorys', 'group'); // nest(res.data, 'categorys', 'groups');
-          
-        // console.log({ 'category': 'stock', data });
         return _items;
       }).catch(err => {
         let error = err; // console.log(err);
@@ -261,13 +258,21 @@ export default {
       return `${code} – ${name1}`;
     },
     selecteditem (val) {
-      console.log(val);
-      this.$store.set('itemselected', '');
-      this.$store.set('itemselected', val);
+      // console.log(this.$store.getters['itemselected']);
+      if (this.$store.getters['itemselected'] == null) { 
+        this.$store.set('itemselected', val);
+        // this.$store.set('itemselected', '');
+      } else {
+        this.$store.set('itemselected', '');
+        this.$store.set('itemselected', val);
+      }
+
+      
       
     },
     loadpic (src) {
-      return ap.url + src;
+      if (typeof src !== 'undefined' && src !== null) return null; else return `${ap.url}images/${src}`;
+     
     }
   }
 };

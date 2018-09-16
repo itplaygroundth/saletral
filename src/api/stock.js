@@ -25,8 +25,8 @@ export default {
     return Axios.get(`${login.API_URL}item`, requestOptions).then(this.handleResponse);
   },
   getItem (val) {
-  // if (AUTH_TOKEN == null) Axios.defaults.headers.common = { 'Authorization': `bearer ${localStorage.getItem('token')}` };
-    // console.log(AUTH_TOKEN);
+   
+  
     const requestOptions = {
       headers: login.getAuthHeader(),
       method: 'GET'
@@ -41,7 +41,7 @@ export default {
         console.log(err);
       });
     return result;
-       
+    
   },
   getAItem () {
   // if (AUTH_TOKEN == null) Axios.defaults.headers.common = { 'Authorization': `bearer ${localStorage.getItem('token')}` };

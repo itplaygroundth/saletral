@@ -147,7 +147,7 @@ export default {
     return data;
   },
   getAuthHeader () {
-    console.log(`${localStorage.getItem('token')}`);
+    // console.log(`${localStorage.getItem('token')}`);
     return {
       'Authorization': `bearer ${localStorage.getItem('token')}`,
       'Content-Type': 'application/json;charset=UTF-8',
